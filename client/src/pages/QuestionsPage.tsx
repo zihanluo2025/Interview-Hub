@@ -11,6 +11,9 @@ import { Button, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import QuestionFormDialog from "./AddQuestion";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
 
 const QuestionRecordsPage = () => {
   const [open, setOpen] = useState(false);
@@ -55,10 +58,8 @@ const QuestionRecordsPage = () => {
     setEditOpen(true);
   };
 
-  const isShow =  useState(false);
-  const handleShow = () => {
-    // isShow = true
-  };
+  const [showChinese, setShowChinese] = useState(false); // 控制中文显示状态
+
 
   
 
@@ -117,18 +118,30 @@ const QuestionRecordsPage = () => {
                 Q{index + 1}. {q.questionEn}
               </h2>
               <div className="flex gap-2">
-              {/* <button
-                  className="text-blue-600 hover:underline"
-                  onClick={() => handleShow(q._id)}
+
+
+                {showChinese && <IconButton
+                  aria-label="VisibilityOff"
+                  onClick={() => setShowChinese(prev => !prev)}
                 >
-                  show
-                </button> */}
-                <button
-                  className="text-blue-600 hover:underline"
+                  <VisibilityOffIcon />
+                </IconButton>} 
+
+                {!showChinese &&  <IconButton
+                  aria-label="Visibility"
+                  onClick={() => setShowChinese(prev => !prev)}
+                >
+                  <VisibilityIcon />
+                </IconButton>} 
+
+
+                
+                <IconButton
+                  aria-label="Edit"
                   onClick={() => handleEdit(q)}
                 >
-                  Edit
-                </button>
+                  <EditIcon />
+                </IconButton>
                 <IconButton
                   aria-label="delete"
                   onClick={() => handleDelete(q._id)}
@@ -137,13 +150,11 @@ const QuestionRecordsPage = () => {
                 </IconButton>
               </div>
             </div>
-            <p className="text-gray-500 italic mt-1 mb-4">
-              中文：{q.questionZh}
-            </p>
+            {showChinese && <p className="text-gray-500 italic mb-2">中文：{q.questionZh}</p>}
             <div className="bg-gray-50 border border-gray-200 p-4 rounded">
-              <h3 className="font-blod text-gray-800 mb-1">Answer:</h3>
+              <h3 className="font-blod text-gray-800 mb-1">Answer :</h3>
               <p className="text-gray-700 mb-2">{q.answerEn}</p>
-              <p className="text-gray-500 italic">中文：{q.answerZh}</p>
+              {showChinese && <p className="text-gray-500 italic">中文：{q.answerZh}</p>}
             </div>
           </div>
         ))}

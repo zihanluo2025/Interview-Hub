@@ -35,13 +35,16 @@ const LoginPage: React.FC = () => {
   };
 
   return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-100 via-white to-pink-100">
+
+ 
     <Box
       sx={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f4f6f8',
+    
       }}
     >
       <Card sx={{ width: 400, boxShadow: 6 }}>
@@ -99,7 +102,7 @@ const LoginPage: React.FC = () => {
             {error && <p style={{ color: "red" }}>错误：{error}</p>}
           </form>
 
-          <Divider sx={{ my: 2 }}>或者</Divider>
+          <Divider sx={{ my: 2 }}>or</Divider>
 
           <Button
             fullWidth
@@ -112,6 +115,7 @@ const LoginPage: React.FC = () => {
         </CardContent>
       </Card>
     </Box>
+    </div>
   );
 };
 
