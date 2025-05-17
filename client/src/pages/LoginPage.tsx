@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { login } from "../api/ auth";
+import { login } from "../api/auth";
 import {
   Box,
   Card,
@@ -12,20 +12,23 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Email, Lock } from '@mui/icons-material';
+import { useUserStore } from '../store/user'; // 根据实际路径调整
+
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 调用 API
-    console.log('登录信息:', { email, password });
     try {
-      await login(email, password);
-      navigate("/home");
+      const res = await login(email, password);
+      setUser(res.user); // 👈 储存用户信息
+      navigate("/questions");
     } catch (err: any) {
       setError(err.response?.data?.message || "登录失败");
     }
@@ -51,7 +54,7 @@ const LoginPage: React.FC = () => {
             <TextField
               fullWidth
               margin="normal"
-              label="邮箱"
+              label="Email"
               variant="outlined"
               type="email"
               value={email}
@@ -69,7 +72,7 @@ const LoginPage: React.FC = () => {
             <TextField
               fullWidth
               margin="normal"
-              label="密码"
+              label="Password"
               variant="outlined"
               type="password"
               value={password}
@@ -91,7 +94,7 @@ const LoginPage: React.FC = () => {
               color="primary"
               type="submit"
             >
-              登录
+              LOGIN
             </Button>
             {error && <p style={{ color: "red" }}>错误：{error}</p>}
           </form>
@@ -104,7 +107,7 @@ const LoginPage: React.FC = () => {
             color="secondary"
             href="/register"
           >
-            去注册
+            REGISTER
           </Button>
         </CardContent>
       </Card>

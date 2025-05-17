@@ -60,7 +60,14 @@ router.post("/login", async (req:any, res:any) => {
     maxAge: 2 * 60 * 60 * 1000,
   });
 
-  return res.json({ message: "登录成功" });
+  return res.json({
+    message: "登录成功",
+    user: {
+      email: user.email,
+      id:user.id
+    },
+  });
+  
 });
 
 

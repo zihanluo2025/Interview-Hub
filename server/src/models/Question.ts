@@ -1,8 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const QuestionSchema = new mongoose.Schema({
-  question: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+const questionSchema = new mongoose.Schema(
+  {
+    questionEn: { type: String, required: true },
+    questionZh: { type: String },
+    answerEn: { type: String },
+    answerZh: { type: String },
+  },
+  { timestamps: true } // 会生成 createdAt 和 updatedAt 字段
+);
 
-export default mongoose.model("Question", QuestionSchema);
+const Question = mongoose.model('Question', questionSchema);
+
+export default Question;

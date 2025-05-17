@@ -7,6 +7,7 @@ import RegisterPage from "../pages/RegisterPage";
 import MainLayout from "../layouts/Mainlayout"
 import JobListPage from "../pages/JobListPage"
 import ProfilePage from "../pages/ProfilePage"
+import FavoritsPage from "../pages/FavoritsPage"
 
 export default function Router() {
   return (
@@ -21,6 +22,8 @@ export default function Router() {
     <Route path="questions/:category" element={<QuestionsPage />} />
     <Route path="jobs" element={<JobListPage />} />
     <Route path="profile" element={<ProfilePage />} />
+    <Route path="favorites" element={<FavoritsPage />} />
+    
     <Route index element={<QuestionsPage />} /> {/* redirect */}
   </Route>
 </Routes>

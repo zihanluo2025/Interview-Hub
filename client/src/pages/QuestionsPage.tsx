@@ -1,29 +1,172 @@
 // src/pages/QuestionsPage.tsx
-import { useEffect, useState } from "react";
-import { fetchQuestions, Question } from "../api/questions"; // ✅ 引入封装的 API
+import React, { useEffect, useState } from "react";
+import {
+  fetchQuestions,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+  Question,
+} from "../api/questions";
+import { Button, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import QuestionFormDialog from "./AddQuestion";
 
-
-export default function QuestionsPage() {
+const QuestionRecordsPage = () => {
+  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedData, setSelectedData] = useState<Question | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const res = await fetchQuestions();
+        if (res) {
+          setQuestions(res);
+        }
+      } catch (error) {
+        console.error("Failed to fetch questions:", error);
+      }
+    };
 
-
-  useEffect( () => {
-    fetchQuestions()
-      .then(setQuestions)
-      .catch((err) => setError(err.message));
+    loadQuestions();
   }, []);
 
+  const handleCreate = async (data: {
+    questionEn: string;
+    questionZh?: string;
+    answerEn?: string;
+    answerZh?: string;
+  }) => {
+    try {
+      const res = await createQuestion(data);
+      if (res?.question) {
+        setOpen(false);
+        setQuestions(prev => [res.question, ...prev]);
+      }
+    } catch (error) {
+      console.error("创建失败:", error);
+    }
+  };
+
+  const handleEdit = (q: Question) => {
+    setSelectedData(q);
+    setEditOpen(true);
+  };
+
+  const isShow =  useState(false);
+  const handleShow = () => {
+    // isShow = true
+  };
+
+  
+
+  const handleUpdate = async (data: {
+    questionEn: string;
+    questionZh?: string;
+    answerEn?: string;
+    answerZh?: string;
+
+  }) => {
+    if (!selectedData?._id) return;
+ 
+    try {
+      await updateQuestion(selectedData._id, data);
+      setEditOpen(false);
+      setQuestions(prev =>
+        prev.map(q => (q._id === selectedData._id ? { ...q, ...data } : q))
+      );
+    } catch (error) {
+      console.error("更新失败:", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteQuestion(id);
+      setQuestions(prev => prev.filter(q => q._id !== id));
+    } catch (error) {
+      console.error("删除失败:", error);
+    }
+  };
+
   return (
-    <div>
-      <h1>Questions</h1>
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      <ul>
-        {questions.map((q) => (
-          <li key={q.id}>{q.question}</li>
+    <div className="min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          sx={{ borderRadius: 2 }}
+          onClick={() => setOpen(true)}
+        >
+          Add question
+        </Button>
+      </div>
+
+      <div className="grid gap-8">
+        {questions.map((q, index) => (
+          <div
+            key={q._id}
+            className={`${
+              index % 2 === 0 ? "!bg-white" : "!bg-gray-50"
+            } border rounded-lg shadow p-6`}
+          >
+            <div className="flex justify-between items-start">
+              <h2 className="text-lg font-semibold text-indigo-700">
+                Q{index + 1}. {q.questionEn}
+              </h2>
+              <div className="flex gap-2">
+              {/* <button
+                  className="text-blue-600 hover:underline"
+                  onClick={() => handleShow(q._id)}
+                >
+                  show
+                </button> */}
+                <button
+                  className="text-blue-600 hover:underline"
+                  onClick={() => handleEdit(q)}
+                >
+                  Edit
+                </button>
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => handleDelete(q._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            </div>
+            <p className="text-gray-500 italic mt-1 mb-4">
+              中文：{q.questionZh}
+            </p>
+            <div className="bg-gray-50 border border-gray-200 p-4 rounded">
+              <h3 className="font-blod text-gray-800 mb-1">Answer:</h3>
+              <p className="text-gray-700 mb-2">{q.answerEn}</p>
+              <p className="text-gray-500 italic">中文：{q.answerZh}</p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+
+      {/* 新增弹窗 */}
+      <QuestionFormDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        onSubmit={handleCreate}
+        mode="add"
+      />
+
+      {/* 编辑弹窗 */}
+      <QuestionFormDialog
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        onSubmit={handleUpdate}
+        mode="edit"
+        initialData={selectedData || undefined}
+      />
     </div>
   );
-}
+};
+
+export default QuestionRecordsPage;
