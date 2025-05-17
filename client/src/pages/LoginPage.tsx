@@ -36,17 +36,9 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-100 via-white to-pink-100">
+      {/* 内容区撑开并居中 */}
+      <div className="flex-grow flex justify-center items-center">
 
- 
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    
-      }}
-    >
       <Card sx={{ width: 400, boxShadow: 6 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom align="center">
@@ -114,7 +106,12 @@ const LoginPage: React.FC = () => {
           </Button>
         </CardContent>
       </Card>
-    </Box>
+      </div>
+ 
+          {/* 固定在底部的 footer */}
+          <footer className="w-full border-t border-gray-200 py-4 px-8 flex justify-between items-center text-sm text-gray-500">
+        <div>© 2025 Zihan Luo, Inc. All rights reserved.</div>
+      </footer>
     </div>
   );
 };

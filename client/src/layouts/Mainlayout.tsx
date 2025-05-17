@@ -28,10 +28,10 @@ const MainLayout: React.FC = () => {
           flexDirection: 'column',
         }}
       >
-        {showTabs && (
+        {/* {showTabs && (
         <Box sx={{borderBottom: '1px solid #e0e0e0', backgroundColor: '#ffffff' }}>
           <TopTabsBar />
-        </Box>)}
+        </Box>)} */}
 
         <Box sx={{ p: 3, flexGrow: 1, backgroundColor: '#fff' }}>
           <Outlet />

@@ -14,6 +14,10 @@ import QuestionFormDialog from "./AddQuestion";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
+import Draggable from 'react-draggable';
+
+import { Fab } from '@mui/material';
+
 
 const QuestionRecordsPage = () => {
   const [open, setOpen] = useState(false);
@@ -93,8 +97,16 @@ const QuestionRecordsPage = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+<div className="flex flex-col min-h-screen">
+  {/* Top Fixed Bar */}
+  {/* <div className="sticky top-0 z-20 bg-white shadow-md bg-gray-50">
+    <div className="px-4 py-3">
+      <Button variant="contained">ADD QUESTION</Button>
+    </div>
+  </div> */}
+
+
+      {/* <div className="flex justify-between items-center mb-6">
         <Button
           variant="contained"
           startIcon={<AddIcon />}
@@ -103,9 +115,25 @@ const QuestionRecordsPage = () => {
         >
           Add question
         </Button>
-      </div>
-
-      <div className="grid gap-8">
+      </div> */}
+      <Fab
+      color="primary"
+      aria-label="add" size="small" 
+      sx={{
+        position: 'fixed',
+        bottom: 32,
+        right: 52,
+        zIndex: 30,
+      }}
+      onClick={() => setOpen(true)}
+    >
+   
+      
+      <AddIcon />
+    </Fab>
+       
+  
+<div className="grid gap-8">
         {questions.map((q, index) => (
           <div
             key={q._id}
