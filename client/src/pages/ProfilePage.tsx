@@ -1,49 +1,61 @@
-// src/pages/QuestionsPage.tsx
-import { useEffect, useState } from "react";
-import { fetchQuestions, Question } from "../api/questions"; // ✅ 引入封装的 API
+import React from 'react';
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
+  Box,
+  Card,
+  CardContent,
+  Typography,
   TextField,
-  Rating
-  
+  Button,
+  Avatar,
 } from '@mui/material';
 
 
-
-
-export default function ProfilePage() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const value = 4
-
-
-
-  useEffect( () => {
-    // fetchQuestions()
-    //   .then(setQuestions)
-    //   .catch((err) => setError(err.message));
-  }, []);
-
+const ProfilePage = () => {
   return (
-    <div>
-      <h1>Questions</h1>
-      <div className="bg-green-500 text-white p-4">✅ Tailwind OK</div>
+    <Box className="flex justify-center items-center w-full h-full  m-0 p-0">
 
-      <Rating name="read-only" value={value} readOnly />
+      <div className="w-full max-w-lg">
+        <div>
+          {/* Avatar */}
+          <div className="flex justify-center mb-6 ">
+            <Avatar
+              alt="Profile Picture"
+              src="/logo192.ico"
+              sx={{ width: 96, height: 96 }}
+              className='shadow-lg'
+            />
+          </div>
 
+          <Typography variant="h5" align="center" gutterBottom>
+            Profile
+          </Typography>
+          <Typography
+            variant="body2"
+            align="center"
+            className="text-gray-500 mb-6"
+          >
+            This information will be displayed publicly so be careful what you share.
+          </Typography>
 
-      <Button className="bg-green-500 text-white">Test</Button>
+          {/* Fields */}
+          <form className="space-y-4">
+            <TextField label="Username" fullWidth variant="outlined" name="username"  />
+            <TextField label="Email" fullWidth variant="outlined" type="email" name="email" />
+            <TextField label="Password" fullWidth variant="outlined" type="password" name="password" />
+            <TextField label="Confirm Password" fullWidth variant="outlined" type="password" name="confirmPassword" />
+            <TextField label="About" fullWidth variant="outlined" multiline rows={3} name="about" />
 
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      <ul>
-        {/* {questions && questions.map((q) => (
-          <li key={q.id}>{q.question}</li>
-        ))} */}
-      </ul>
-    </div>
+            {/* Save Button */}
+            <div className="pt-4">
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Save
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Box>
   );
-}
+};
+
+export default ProfilePage;

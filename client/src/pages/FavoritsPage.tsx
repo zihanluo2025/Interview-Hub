@@ -30,7 +30,7 @@ const FavoritsPage = () => {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* <div className="flex justify-between items-center mb-6">
         <Button variant="contained" startIcon={<AddIcon />} sx={{ borderRadius: 2 }}>
           Add question
