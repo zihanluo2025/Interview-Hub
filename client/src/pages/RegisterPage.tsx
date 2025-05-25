@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { register } from '../api/auth';
 import { useNavigate } from 'react-router-dom'; // 如果你使用 react-router
 import {
-  Box,
   Card,
   CardContent,
   Typography,

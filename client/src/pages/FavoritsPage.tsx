@@ -1,14 +1,12 @@
 // src/pages/QuestionsPage.tsx
-import { useEffect, useState } from "react";
-import { fetchQuestions, Question } from "../api/questions"; // ✅ 引入封装的 API
-import { Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import {  useState } from "react";
+
 
 
 
 
 const FavoritsPage = () => {
-  const [questions, setQuestions] = useState([
+  const [questions] = useState([
     {
       id: 1,
       question_en: 'What is a closure in JavaScript?',
@@ -25,9 +23,7 @@ const FavoritsPage = () => {
     }
   ]);
 
-  const handleDelete = (id:any) => {
-    setQuestions(prev => prev.filter(q => q.id !== id));
-  };
+
 
   return (
     <div className="bg-gray-50 min-h-screen">
