@@ -8,7 +8,3 @@ Technique practice project
 - Database : Mangodb
 - Deploy: Google cloud server
 
-## Deployed on Google Cloud servers :
-```bash
- http://34.151.95.96/register
-```
