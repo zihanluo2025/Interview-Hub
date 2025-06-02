@@ -6,6 +6,7 @@ Technique practice project
 - Frontend : React + MUI + Tailwind
 - Backend : Node.js
 - Database : Mangodb
+- Deploy: Google cloud server
 
 ## Deployed on Google Cloud servers :
 ```bash
