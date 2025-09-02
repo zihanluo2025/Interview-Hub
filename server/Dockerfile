@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Expose port (match your Express app)
-EXPOSE 3000
+EXPOSE 5050
 
 # Start server with compiled JS
 CMD ["node", "dist/index.js"]
