@@ -20,7 +20,7 @@ export const useUserStore = create<UserStore>()(
       clearUser: () => set({ user: null }),
     }),
     {
-      name: 'user-storage', // 本地存储的 key
+      name: 'user-storage', 
     }
   )
 );
