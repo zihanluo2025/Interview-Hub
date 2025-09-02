@@ -1,0 +1,46 @@
+name: Server Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "server/**"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::930900578455:role/github-actions
+          aws-region: ap-southeast-2
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-southeast-2 | \
+          docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URI }}
+
+      - name: Build Docker image
+        working-directory: server
+        run: |
+          docker build -t interview-hub-server .
+          docker tag interview-hub-server:latest ${{ secrets.ECR_REPO_URI }}:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REPO_URI }}:latest
+
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service \
+            --cluster interview-hub-cluster \
+            --service interview-hub-server \
+            --force-new-deployment
