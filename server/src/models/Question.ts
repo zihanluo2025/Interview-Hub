@@ -7,7 +7,7 @@ const questionSchema = new mongoose.Schema(
     answerEn: { type: String },
     answerZh: { type: String },
   },
-  { timestamps: true } // 会生成 createdAt 和 updatedAt 字段
+  { timestamps: true } 
 );
 
 const Question = mongoose.model('Question', questionSchema);
